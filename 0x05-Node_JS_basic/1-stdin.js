@@ -1,9 +1,13 @@
-process.stdin.resume();
-const prompt = require('prompt-sync')();
+process.stdin.setEncoding('utf8');
 
 console.log('Welcome to Holberton School, what is your name?');
-const name = prompt();
-console.log(`Your name is: ${name}`);
-process.on('exit', () => {
-  console.log('This important software is now closing');
+process.stdin.on('readable', () => {
+  const name = process.stdin.read();
+  if (name !== null) {
+    process.stdout.write(`Your name is: ${name}`);
+  }
+});
+
+process.stdin.on('exit', () => {
+  process.stdout.write('This important software is now closing');
 });
